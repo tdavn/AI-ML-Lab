@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Results</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                  <h5>Key words for Twitter search:</h5>
+                  <div>Keyword 1: <span id="k1"></span></div>
+                  <div>Keyword 2: <span id="k2"></span></div>
+                  <div>Keyword 3: <span id="k3"></span></div>
+
+                  <h5 class="pt-3">Analysis Result:</h5>
+                  <div id="prediction"></div> <!-- id from javascript at the bottom -->
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <a class="btn btn-primary" href="results/" role="button">Details</a>
+              </div>
+          </div>
+      </div>
+  </div>
+  <!-- The forms to collect information for ajax below -->
+  <div class="container pt-5">
+      <div class="row justify-content-md-center">
+          <div class="col-md-4">
+              <h1>Twitter Classifier</h1>
+              <form action="" id="post-form">
+                  {% csrf_token %}
+                  <div class="form-group">
+                      <label for="key1">Keyword 1</label>
+                      <input type="text" class="form-control" id="key1" placeholder="Example: 'iphone promax'" required>
+                  </div>
+                  <div class="form-group">
+                      <label for="key2">Keyword 2</label>
+                      <input type="text" class="form-control" id="key2" placeholder="2nd keyword">
+                  </div>
+                  <div class="form-group">
+                      <label for="key3">Keyword 3</label>
+                      <input type="text" class="form-control" id="key3" placeholder="3rd keyword">
+                  </div>
+
+                  <button type="submit" value="submit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Submit</button>
+              </form>
+          </div>
+      </div>
+  </div>
+  <!-- ajax code below sends information to views.py via POST -->
+  <script>
+    $(document).on('submit', '#post-form',function(e){
+        e.preventDefault();
+        $.ajax({
+            type:'POST',
+            url:'{% url "classifier:submit_prediction" %}', // define the target in urls.py
+            data:{
+                key1:$('#key1').val(),
+                key2:$('#key2').val(),
+                key3:$('#key3').val(),
+
+                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                action: 'post'
+            },
+            success:function(json) {
+                document.forms["post-form"].reset();
+                document.getElementById("prediction").innerHTML = json['sentiment']
+                document.getElementById("k1").innerHTML = json['primary_keyword']
+                document.getElementById("k2").innerHTML = json['secondary_keyword']
+                document.getElementById("k3").innerHTML = json['third_keyword']
+                // these recieve from views.py's JsonResponse(), then redirect to "modal-body" above
+            },
+            error : function(xhr,errmsg,err) {
+
+            }
+        });
+    })
+  </script>
+</div>
+
+{% endblock %}

@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="container pt-5">
+    <div class="row justify-content-md-center">
+        <div class="col-md-4">
+            <h1>Twitter Classifier</h1>
+            <form action="{% url 'demo' %}" method="POST">
+                {% csrf_token %}
+                  <div class="mb-3">
+                    <label for="exampleFormControlTextarea1" class="form-label">Search Keywords</label>
+                    <textarea class="form-control" rows="2", placeholder="Separate keywords by comma" name="keywords"></textarea>
+                  </div>
+                <button type="submit" value="submit" class="btn btn-primary" data-toggle="modal">Submit</button>
+            </form>
+        </div>
+    </div>
+
+
+    <br/> <br/>
+
+    <br/>
+    {% if result %}
+      <h3>Result</h3>
+      <br/>
+      <h5> Search for {{ search_keys }} ... </h5>
+      <br/>
+      <div class="card mb-3">
+          <div class="row no-gutters">
+
+            {% if result == 'Highly favor!' %}
+              <div class="col-md-2">
+                <img src="{% static 'heart.jpg'%}" class="rounded" alt="love it">
+              </div>
+              <div class="col-md-10">
+                <div class="card-body">
+                  <h5 class="card-title">We love it!</h5>
+                      <p class="card-text">We love it. All twitter users recommend for this one</p>
+                </div>
+              </div>
+            {% elif result == 'Recommend!' %}
+              <div class="col-md-2">
+                <img src="{% static 'likeit.png'%}" class="rounded" alt="like it">
+              </div>
+              <div class="col-md-10">
+                <div class="card-body">
+                  <h5 class="card-title">We like it!</h5>
+                      <p class="card-text">We like it. Most twitter users recommend for this one</p>
+                </div>
+              </div>
+            {% elif result == 'Normal Quality.' %}
+              <div class="col-md-2">
+                <img src="{% static 'normal.png' %}" class="rounded" alt="so so">
+              </div>
+              <div class="col-md-10">
+                <div class="card-body">
+                  <h5 class="card-title">Unpredictable!</h5>
+                      <p class="card-text">Half yes - Half no</p>
+                </div>
+              </div>
+            {% elif result == 'Not recommend!' %}
+              <div class="col-md-2">
+                <img src="{% static 'notgood.png'%}" class="rounded" alt="Dislike">
+              </div>
+              <div class="col-md-10">
+                <div class="card-body">
+                  <h5 class="card-title">We do not like it!</h5>
+                      <p class="card-text">There are better options out there!</p>
+                </div>
+              </div>
+              {% else %}
+                <div class="col-md-2">
+                  <img src="{% static 'sorry.png'%}" class="rounded" alt="sorry">
+                </div>
+                <div class="col-md-10">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ result }}</h5>
+                        <p class="card-text">There is not enough information or please try with other keywords!</p>
+                  </div>
+                </div>
+            {% endif %}
+
+
+
+          </div>
+        </div>
+      {% endif %}
+</div>
+
+
+{% endblock %}

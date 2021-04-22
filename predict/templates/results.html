@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container pt-5">
+        <div class="row">
+
+        <h1>Details for the search</h1>
+
+            <table class="table">
+                <thead>
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">Primary keyword</th>
+                <th scope="col">Secondary keyword</th>
+                <th scope="col">Third keyword</th>
+                <th scope="col"><b>Perception</b></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for data in dataset %}
+                    <tr>
+                    <th scope="row">{{ data.id }}</th>
+                    <td>{{ data.keyword_1 }}</td>
+                    <td>{{ data.keyword_2 }}</td>
+                    <td>{{ data.keyword_3 }}</td>
+                    <td>{{ data.sentiment }}</td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class='container'>
+  <img src="{% static 'twitter_ban.png'%}" class="img-fluid" alt="roudner">
+  <h1>Classifier action information</h1>
+  <br/>
+  <ul>
+      {% for search in api %}
+
+          <li><p>Search ID: {{ search.id }}</p>
+              <p>Date: {{ search.search_date }}</p>
+              <p>Keywords: <b>{{ search.search_keys }}</b></p>
+              <p>Result: <b>{{ search.result }} </b></p>
+          </li>
+      {% endfor %}
+      </ul>
+
+
+
+</div>
+
+{% endblock %}
