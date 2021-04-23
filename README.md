@@ -12,8 +12,20 @@
 <li> Use the classifier from (1) to understand the sentiment from the tweets from (2), which shows % of positive and negative evalutation.</li>
 <li> Deploy the classifier on Django</li>
 </ol>
-<h3> File structure</h3>
-- Folder hompage: contain all code for the project.
-- ipynb files: python conde explanation in Jupyter Notebook
-- tfidf_rf_pipeline.sav: The saved classifier (saved with Joblib) for sentiment labelling
-- requirements.txt: contain information of dependencies
+<h3> Descriptions</h3>
+<b>  This is a Django-based platform that integrate a ML classifier for tweet sentiment classification</b>
+<b>  A Restful API is also included (Django REST Framework-DRF) for later scalability.</b>
+<h3> Major features </h3>
+<ol>
+<li> Real-time tweet collection. On-the-fly analysis</li>
+<li> ML-based classifier trained from Sentiment140 dataset</li>
+<li> Powered by Django web framework in back-end. Responsive layout and mobile friendly front-end with the latest Bootstrap </li>
+<li> Scalable and highly secured by DRF</li>
+</ol>
+<h3> Structure</h3>
+<ul>
+<li> Folder hompage: contain all code for the project.</li>
+<li> ipynb files: python conde explanation in Jupyter Notebook</li>
+<li> tfidf_rf_pipeline.sav: The saved classifier (saved with Joblib) for sentiment labelling</li>
+<li> requirements.txt: contain information of dependencies</li>
+</ul>
